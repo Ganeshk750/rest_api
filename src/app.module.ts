@@ -12,7 +12,7 @@ import { AppService } from './app.service';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: 'ganesh',
+      password: 'root',
       database: 'blogs',
       entities: [],
       synchronize: true,
