@@ -23,7 +23,7 @@ export class UserService {
                 newUser.name = user.name;
                 newUser.username = user.username;
                 newUser.email = user.email;
-                newUser.password = user.password;
+                newUser.password = passwordHash;
                 return from(this._userRepository.save(newUser)).pipe(
                     map((user: User) => {
                         const { password, ...result } = user;
@@ -68,20 +68,19 @@ export class UserService {
         return from(this._userRepository.update(id, user));
     }
 
-
     login(user: User): Observable<string> {
         return this.validateUser(user.email, user.password).pipe(
             switchMap((user: User) => {
                 if (user) {
-                    return this._authService.generateJwt(user).pipe(map((jwt: string) => jwt));
+                    return this._authService.generateJWT(user).pipe(map((jwt: string) => jwt));
                 } else {
-                    return 'Worng Credentials';
+                    return 'Wrong Credentials';
                 }
             })
         )
     }
 
-    private validateUser(email: string, password: string): Observable<User> {
+    validateUser(email: string, password: string): Observable<User> {
         return this.findByMail(email).pipe(
             switchMap((user: User) => this._authService.comparePasswords(password, user.password).pipe(
                 map((match: boolean) => {
@@ -96,7 +95,7 @@ export class UserService {
         )
     }
 
-    private findByMail(email: string): Observable<User> {
+    findByMail(email: string): Observable<User> {
         return from(this._userRepository.findOne({ email }));
     }
 

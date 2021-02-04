@@ -12,15 +12,16 @@ export class AuthService {
 
   constructor(private readonly _jwtService: JwtService) { }
 
-  generateJwt(user: User): Observable<string> {
+  generateJWT(user: User): Observable<string> {
     return from(this._jwtService.signAsync({ user }));
   }
 
   hashPassword(password: string): Observable<string> {
     return from<string>(bcrypt.hash(password, 12));
+
   }
 
-  comparePasswords(newPassword: string, passwordHash: string): Observable<any | boolean> {
-    return of<any | boolean>(bcrypt.compare(newPassword, passwordHash));
+  comparePasswords(newPassword: string, passwortHash: string): Observable<any> {
+    return from(bcrypt.compare(newPassword, passwortHash));
   }
 }

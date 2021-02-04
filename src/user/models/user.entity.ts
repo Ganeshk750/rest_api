@@ -1,4 +1,5 @@
 import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { bcrypt } from 'bcrypt';
 
 @Entity()
 export class UserEntity {
@@ -22,4 +23,10 @@ export class UserEntity {
     emailToLowerCase() {
         this.email = this.email.toLowerCase();
     }
+
+    /* @BeforeInsert()
+    hashPassword() {
+        this.password = bcrypt.hash(this.password);
+    } */
+
 }
