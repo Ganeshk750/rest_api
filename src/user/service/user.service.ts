@@ -24,6 +24,8 @@ export class UserService {
                 newUser.username = user.username;
                 newUser.email = user.email;
                 newUser.password = passwordHash;
+                /* Adding Roles */
+                newUser.role = user.role;
                 return from(this._userRepository.save(newUser)).pipe(
                     map((user: User) => {
                         const { password, ...result } = user;
@@ -67,6 +69,13 @@ export class UserService {
         delete user.password;
         return from(this._userRepository.update(id, user));
     }
+
+
+    updateRoleOfUser(id: number, user: User): Observable<any> {
+       return from(this._userRepository.update(id, user));
+    }
+
+
 
     login(user: User): Observable<string> {
         return this.validateUser(user.email, user.password).pipe(

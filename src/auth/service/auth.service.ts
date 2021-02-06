@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { User } from 'src/user/models/user.interface';
 //import { bcrypt } from 'bcrypt';
 const bcrypt = require('bcrypt');
-import { of } from 'rxjs';
 
 @Injectable()
 export class AuthService {

@@ -1,5 +1,5 @@
 import { BeforeInsert, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { bcrypt } from 'bcrypt';
+import { UserRole } from './user.role';
 
 @Entity()
 export class UserEntity {
@@ -19,14 +19,13 @@ export class UserEntity {
     @Column()
     password: string;
 
+    @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
+    role: UserRole;
+
     @BeforeInsert()
     emailToLowerCase() {
         this.email = this.email.toLowerCase();
     }
 
-    /* @BeforeInsert()
-    hashPassword() {
-        this.password = bcrypt.hash(this.password);
-    } */
 
 }
