@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, UseGuards, Query } from '@nestjs/common';
 import { User } from '../models/user.interface';
 import { UserService } from '../service/user.service';
 import { Observable, of } from 'rxjs';
@@ -7,6 +7,7 @@ import { hasRoles } from 'src/auth/decorator/role.decorator';
 import { JwtAuthGurd } from '../../auth/guards/jwt-guard';
 import { RolesGuard } from '../../auth/guards/roles.guard';
 import { UserRole } from '../models/user.role';
+import { Pagination } from 'nestjs-typeorm-paginate';
 
 @Controller('users')
 export class UserController {
@@ -28,12 +29,22 @@ export class UserController {
         return this._userService.findOne(params.id);
     }
 
-    @hasRoles(UserRole.ADMIN)
-    @UseGuards(JwtAuthGurd, RolesGuard)
+    /*   @hasRoles(UserRole.ADMIN)
+      @UseGuards(JwtAuthGurd, RolesGuard)
+      @Get()
+      findAll(): Observable<User[]> {
+          return this._userService.findAll();
+      } */
+
+    /* New Method for Pagination */
+
     @Get()
-    findAll(): Observable<User[]> {
-        return this._userService.findAll();
+    index(@Query('page') page: number = 1, @Query('limit') limit: number = 10,): Observable<Pagination<User>> {
+        limit = limit > 100 ? 100 : limit;
+        return this._userService.paginate({ page, limit, route: 'http://localhost:3000/users' });
+
     }
+
 
     @Delete(':id')
     deleteOne(@Param('id') id: string): Observable<any> {
