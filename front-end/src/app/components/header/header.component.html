@@ -1,0 +1,38 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row fxLayoutAlign="space-between center">
+    <div fxLayout="row">
+      <button mat-button>
+        <mat-icon>home</mat-icon>
+        <span class="logo">NestJs Blog</span>
+      </button>
+      <div *ngIf="!deviceXs">
+        <button mat-button routerLink="/admin">
+          <span>Admin</span>
+        </button>
+        <button mat-button routerLink="/login">
+          <span>Login</span>
+        </button>
+        <button mat-button routerLink="register">
+          <span>Register</span>
+        </button>
+      </div>
+    </div>
+    <div>
+      <button mat-icon-button>
+        <mat-icon *ngIf="deviceXs">more_vert</mat-icon>
+        <span *ngIf="!deviceXs">Menu</span>
+      </button>
+    </div>
+  </mat-toolbar-row>
+  <mat-toolbar-row *ngIf="deviceXs" fxLayoutAlign="space-between center end">
+    <button mat-button routerLink="/admin">
+      <span>Admin</span>
+    </button>
+    <button mat-button routerLink="/login">
+      <span>Login</span>
+    </button> 
+    <button mat-button routerLink="/register">
+      <span>Register</span>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
