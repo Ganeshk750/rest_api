@@ -1,29 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../../services/authentication.service';
-import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { CustomeValidators } from 'src/app/validators/password.validators';
 
-
-class CustomeValidators {
-  static passwordContainsNumber(controle: AbstractControl): ValidationErrors {
-    const regax = /\d/;
-    if(regax.test(controle.value) && controle.value !== null){
-      return null;
-    }else{
-      return {passwordInvalid: true};
-    }
-  }
-  static passwordMatches(control: AbstractControl): ValidationErrors {
-    const password = control.get('password').value;
-    const passwordConfirms = control.get('passwordConfirm').value;
-    if((password === passwordConfirms) && (password !== null && passwordConfirms !== null)){
-        return null;
-    }else{
-      return { passwordNotMatching: true};
-    }
-  }
-}
 
 @Component({
   selector: 'app-register',
